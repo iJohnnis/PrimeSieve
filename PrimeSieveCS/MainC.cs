@@ -7,14 +7,14 @@ using System.Diagnostics;
 
 using BenchmarkDotNet.Running;
 
-using static PrimeSieveCS.Utils;
+using static PrimeSieveCS.Common;
 
 namespace PrimeSieveCS {
     public class MainC {
 		static void Main() {
-            //BenchmarkRunner.Run<Benchmarks>();
-            RunForSeconds(5, 1e6);
-            //RunOnce((int)1e8);
+            BenchmarkRunner.Run<Benchmarks>();
+            //RunForSeconds(10, 1e6);
+            //RunTimes((int)1e8);
             //DavesTest();
         }
 
@@ -32,25 +32,30 @@ namespace PrimeSieveCS {
 			sieve.WriteResults(primaryStopwatch.Elapsed.TotalSeconds, passesCount);
         }
 
-		public static void RunOnce(double len) {
+		public static void RunTimes(double len, int times = 1) {
 			var primaryStopwatch = Stopwatch.StartNew();
-			PrimeSieveBitArray sieve = new ((int)len);
-			sieve.RunSieve();
-			int primesCount = sieve.PrimesCount();
+
+			PrimeSieveBA sieve = null;
+			int primesCount = -1;
+            while (times-- > 0) {
+				sieve = new((int)len);
+				sieve.RunSieve();
+				primesCount = sieve.PrimesCount();
+			}
+			var isValid = sieve.ValidationResult();
+
 			primaryStopwatch.Stop();
 
-
-			var colors = new[] {
-				ConsoleColor.Gray,
-				ConsoleColor.DarkGreen,
-				ConsoleColor.Red,
-			};
-
-			if (PrimeSieveBitArray.Facts.TryGetValue((int)len, out int expected))
-				WriteLine("Expected primes   : ", expected);
+			WriteLine("Expected primes   : ", HistoricalData.TryGetValue((int)len, out int e) 
+				? e.ToString() : "unknown");
             WriteLine("Counted primes    : ", primesCount);
 			WriteLineSeperator();
-			WriteLine("Validation-Result : ", sieve.IsValid(), colors[(int)sieve.IsValid()]);
+			WriteLine("Validation-Result : ", isValid, isValid switch {
+				ValidationResult.Unkown => ConsoleColor.DarkGray,
+				ValidationResult.Valid => ConsoleColor.DarkGreen,
+				ValidationResult.Invalid => ConsoleColor.Red,
+				_ => throw new Exception("Invalid validation result!")
+			});
 			WriteLineSeperator();
 			WriteLine("Elapsed           : ", primaryStopwatch.ElapsedMilliseconds, " ms.", ConsoleColor.DarkRed);
 			WriteLineSeperator();

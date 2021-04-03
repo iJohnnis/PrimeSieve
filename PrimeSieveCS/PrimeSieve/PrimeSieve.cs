@@ -6,23 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
+using static PrimeSieveCS.Common;
+
 namespace PrimeSieveCS {
     /// <summary> Optimized for multiple runs. </summary>
     public class PrimeSieve {
-        // Historical data for validating our results - the number of primes to be found under some limit, such as 168 primes under 1000
-        public static readonly Dictionary<int, int> HistoricalData = new() {
-            [10] = 4,
-            [25] = 9,
-            [100] = 25,
-            [1_000] = 168,
-            [10_000] = 1229,
-            [100_000] = 9592,
-            [1_000_000] = 78498,
-            [10_000_000] = 664579,
-            [100_000_000] = 5761455,
-            [1000_000_000] = 50847534
-        };
-
         readonly int sieveSize = 0;
         readonly bool[] NoPrimes;
 
@@ -88,20 +76,20 @@ namespace PrimeSieveCS {
         }
 
         public void WriteResults(double elapsedSeconds, int passes) {
-            Utils.WriteLineSeperator();
-            Utils.WriteLine("Passes             : ", passes);
-            Utils.WriteLine("Elapsed            : ", elapsedSeconds.ToString("n"), " s");
-            Utils.WriteLine("Rate               : ", (passes/elapsedSeconds/1000).ToString("n"), " kops/s");
-            Utils.WriteLineSeperator();
-            Utils.WriteLine("Sieve-Size         : ", sieveSize);
-            Utils.WriteLine("Primes Counted     : ", PrimesCount());
-            Utils.WriteLine("Validation-Results : ", IsValid(), IsValid() switch {
+            WriteLineSeperator();
+            WriteLine("Passes             : ", passes);
+            WriteLine("Elapsed            : ", elapsedSeconds.ToString("n"), " s");
+            WriteLine("Rate               : ", (passes/elapsedSeconds/1000).ToString("n"), " kops/s");
+            WriteLineSeperator();
+            WriteLine("Sieve-Size         : ", sieveSize.ToString("N0"));
+            WriteLine("Primes Counted     : ", PrimesCount());
+            WriteLine("Validation-Results : ", IsValid(), IsValid() switch {
                 ValidationResult.Unkown => ConsoleColor.Gray,
                 ValidationResult.Valid => ConsoleColor.DarkGreen,
                 ValidationResult.Invalid => ConsoleColor.Red,
                 _ => throw new Exception("Invalid validation results.")
             });
-            Utils.WriteLineSeperator();
+            WriteLineSeperator();
         }
     }
 }

@@ -9,7 +9,7 @@ using System.IO;
 
 namespace PrimeSieveCS {
     /// <summary> Optimized for memory usage. </summary>
-    public class PrimeSieveBitArray {
+    public class PrimeSieveBA {
         // Historical data for validating our results - the number of primes to be found under some limit, such as 168 primes under 1000
         public static readonly Dictionary<int, int> Facts = new() {
             [10] = 4,
@@ -27,7 +27,7 @@ namespace PrimeSieveCS {
         readonly int sieveSize = 0;
         readonly BitArray Primes;
 
-        public PrimeSieveBitArray(int size) {
+        public PrimeSieveBA(int size) {
             sieveSize = size;
             Primes = new BitArray(size/2, true);
         }
@@ -43,9 +43,9 @@ namespace PrimeSieveCS {
             return primesCount = count;
         }
 
-        public ValidationResult IsValid() => Facts.TryGetValue(sieveSize, out int ival) 
-            ? (ival == PrimesCount() ? ValidationResult.Valid : ValidationResult.Invalid)
-            : ValidationResult.Unkown;
+        public ValidationResult ValidationResult() => Facts.TryGetValue(sieveSize, out int ival) 
+            ? (ival == PrimesCount() ? PrimeSieveCS.ValidationResult.Valid : PrimeSieveCS.ValidationResult.Invalid)
+            : PrimeSieveCS.ValidationResult.Unkown;
 
         /// Calculate the primes up to the specified limit
         public void RunSieve() {
@@ -90,6 +90,6 @@ namespace PrimeSieveCS {
             $"Average: {passes/elapsedSeconds:n} p/s, " +
             $"Passes: {passes}, Elapsed: {elapsedSeconds:n}s, " +
             $"Sieve-Size: {sieveSize}, Primes Found: {PrimesCount()}, " +
-            $"Validation-Results: {IsValid()}");
+            $"Validation-Results: {ValidationResult()}");
     }
 }

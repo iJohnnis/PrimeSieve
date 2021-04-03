@@ -6,12 +6,16 @@ namespace PrimeSieveCS {
     [Orderer(SummaryOrderPolicy.FastestToSlowest)]
     [RankColumn]
     public class Benchmarks {
-        [Params((int)1e7, (int)1e8, (int)1e9)]
-        public int SieveSize { get; set; }
+        public PrimeSieve Sieve { get; set; } = new PrimeSieve((int)1e7);
 
+        //[Benchmark]
+        //public void RunSieveBA() => new PrimeSieveBA(SieveSize).RunSieve();
         [Benchmark]
-        public void RunSieveBitArray() => new PrimeSieveBitArray(SieveSize).RunSieve();
+        public void BuildAndRunSieve() {
+            new PrimeSieve((int)1e7).RunSieve();
+            new PrimeSieve((int)1e6).RunSieve();
+        }
         [Benchmark]
-        public void RunSieveBoolArray() => new PrimeSieve(SieveSize).RunSieve();
+        public void RunSieve() => Sieve.RunSieve();
     }
 }

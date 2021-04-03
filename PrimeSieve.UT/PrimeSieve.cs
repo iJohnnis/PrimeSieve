@@ -19,7 +19,7 @@ namespace PrimeSieveUT {
         }
 
         public static IEnumerable<object[]> GetHistoricalData(int max) {
-            foreach(var (sieveSize,primesCount) in PrimeSieve.HistoricalData) {
+            foreach(var (sieveSize,primesCount) in Common.HistoricalData) {
                 if (sieveSize < max)
                     yield return new object[] { sieveSize, primesCount };
             }
