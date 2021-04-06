@@ -7,20 +7,19 @@ using System.Threading.Tasks;
 namespace PrimeSieveCS
 {
     public static class Common {
-        public static readonly string Seperator = new string('-', 80);
+        public static readonly string Seperator = new('-', 80);
 
 		// Historical data for validating our results - the number of primes to be found under some limit, such as 168 primes under 1000
-		public static readonly Dictionary<int, int> HistoricalData = new() {
-			[10] = 4,
-			[25] = 9,
-			[100] = 25,
-			[1_000] = 168,
-			[10_000] = 1229,
-			[100_000] = 9592,
-			[1_000_000] = 78498,
-			[10_000_000] = 664579,
-			[100_000_000] = 5761455,
-			[1000_000_000] = 50847534
+		public static readonly Dictionary<long, int> HistoricalData = new() {
+			[(long)1e01] = 4,
+			[(long)1e02] = 25,
+			[(long)1e03] = 168,
+			[(long)1e04] = 1229,
+			[(long)1e05] = 9592,
+			[(long)1e06] = 78498,
+			[(long)1e07] = 664579,
+			[(long)1e08] = 5761455,
+			[(long)1e09] = 50847534
 		};
 
 		public static void WriteLineSeperator() => Console.WriteLine(Seperator);

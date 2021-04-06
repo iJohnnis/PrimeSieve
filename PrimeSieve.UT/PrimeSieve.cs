@@ -15,7 +15,7 @@ namespace PrimeSieveUT {
         public void CompareToHistoricalData(int sieveSize, int expected) {
             var sieve = new PrimeSieve(sieveSize);
             sieve.RunSieve();
-            Assert.Equal(expected, sieve.PrimesCount());
+            Assert.Equal(expected, sieve.PrimesCount);
         }
 
         public static IEnumerable<object[]> GetHistoricalData(int max) {

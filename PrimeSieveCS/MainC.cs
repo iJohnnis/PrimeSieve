@@ -13,14 +13,14 @@ namespace PrimeSieveCS {
     public class MainC {
         static void Main() {
             //BenchmarkRunner.Run<Benchmarks>();
-            RunForSeconds(5, 1e6);
-            //RunTimes((int)1e8);
+            //RunForSeconds(5, 1e8);
+            RunTimes(1e9);
             //DavesTest();
         }
 
-        public static void RunForSeconds(double duration=5, double sieve_size=1e6) {
+        public static void RunForSeconds(double duration=5, double dSieveSize=1e6) {
             var primaryStopwatch = Stopwatch.StartNew();
-            int sieveSize = (int)sieve_size;
+            int sieveSize = (int)dSieveSize;
 
             PrimeSieve sieve = null;
             int passesCount = 0;

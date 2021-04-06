@@ -7,23 +7,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
+using static PrimeSieveCS.Common;
+
 namespace PrimeSieveCS {
     /// <summary> Optimized for memory usage. </summary>
     public class PrimeSieveBA {
-        // Historical data for validating our results - the number of primes to be found under some limit, such as 168 primes under 1000
-        public static readonly Dictionary<int, int> Facts = new() {
-            [10] = 4,
-            [25] = 9,
-            [100] = 25,
-            [1_000] = 168,
-            [10_000] = 1229,
-            [100_000] = 9592,
-            [1_000_000] = 78498,
-            [10_000_000] = 664579,
-            [100_000_000] = 5761455,
-            [1000_000_000] = 50847534
-        };
-
         readonly int sieveSize = 0;
         readonly BitArray Primes;
 
@@ -43,7 +31,7 @@ namespace PrimeSieveCS {
             return primesCount = count;
         }
 
-        public ValidationResult ValidationResult() => Facts.TryGetValue(sieveSize, out int ival) 
+        public ValidationResult ValidationResult() => HistoricalData.TryGetValue(sieveSize, out int ival) 
             ? (ival == PrimesCount() ? PrimeSieveCS.ValidationResult.Valid : PrimeSieveCS.ValidationResult.Invalid)
             : PrimeSieveCS.ValidationResult.Unkown;
 
